@@ -2,16 +2,16 @@ class TaskManager:
     def __init__(self):
         self.__tasks = []
 
-    def add_task(self, title, description):  # добавить задачу
-        self.__tasks.append(Task(title, description))
+    def add_task(self, title, description):  # Добавил задачу
+        self.__tasks.append({"title": title, "description": description, "done": False})
 
-    def remove_task(self, title):  # убрать задачу
-        self.__tasks = [task for task in self.__tasks if task.title != title]
+    def remove_task(self, title):  # убрал задачу
+        self.__tasks = [task for task in self.__tasks if task['title'] != title]
 
-    def mark_as_done(self, title):  # отметить задачу сделанной
+    def mark_as_done(self, title):  # сделал
         for task in self.__tasks:
-            if task.title == title:
-                task.done = True
+            if task['title'] == title:
+                task['done'] = True
                 break
 
     def show_tasks(self):  # что осталось сделать
@@ -19,20 +19,17 @@ class TaskManager:
             print("Задач для выполнения нема")
         else:
             for task in self.__tasks:
-                print(f"{task} \n описание: {task.description}\n")
+                status = "Выполнено" if task['done'] else "Не выполнено"
+                print(f"Задача: {task['title']} \nОписание: {task['description']} \nСтатус: {status}\n")
+
+    def get_tasks(self):
+        return self.__tasks
+
+    def set_tasks(self, tasks):
+        self.__tasks = tasks
 
     def __str__(self):  # чтобы когда я просил вывести выводилось строчкой
         return f"Количество задач: {len(self.__tasks)}"
-
-
-class Task:
-    def __init__(self, title, description):  # создание задачи
-        self.title = title
-        self.description = description
-        self.done = False
-
-    def __str__(self):
-        return f"Задача: {self.title} \n статус: {self.done}"
 
 
 if __name__ == '__main__':
@@ -45,3 +42,5 @@ if __name__ == '__main__':
 
     task_manager.remove_task("Сделать ДЗ по школе")  # типо я уже сделал дз по школе и я его не считаю
     task_manager.show_tasks()  # все что осталось сделать
+
+    print(f"{task_manager}\nСПАСИБО ЗА ВНИМАНИЕ К МОЕМУ ТВОРЕНИЮ:)")
